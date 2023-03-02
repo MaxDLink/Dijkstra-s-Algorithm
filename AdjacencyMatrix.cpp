@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
     int n = 4; // number of vertices
-    vector<vector<int>> adj_matrix(n, vector<int>(n)); // initialize a n x n matrix with zeros
+    vector<vector<int> > adj_matrix(n, vector<int>(n)); // initialize a n x n matrix with zeros
     
     // set the adjacency matrix
     adj_matrix[0][1] = adj_matrix[1][0] = 1;

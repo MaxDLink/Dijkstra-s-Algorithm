@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
     int n = 4; // number of vertices
-    vector<vector<int>> adj_list(n); // initialize a vector of n empty vectors
+    vector<vector<int> > adj_list(n); // initialize a vector of n empty vectors
     
     // add edges to the adjacency list
     adj_list[0].push_back(1);
