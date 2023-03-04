@@ -52,7 +52,7 @@ public: // public members accessible outside of MyGraph class
         // The second item (float) denote the actual capacity of the route
 
         // create a priority que to store the vertices that must be explored
-        priority_queue<pair<float, int>> pq;
+        priority_queue<pair<float, int> > pq;
 
         // initialize the pq
         pq.push(make_pair(numeric_limits<float>::max(), s)); // Add s to the priority queue with infinite weight
@@ -63,7 +63,7 @@ public: // public members accessible outside of MyGraph class
         while (!pq.empty()) // while the priority queue is not empty
         {
             // get the vertex with the maximum weight in the priority queue
-            auto [w, u] = pq.top(); // binds weight to w and vertex to u
+            const auto [w, u] = pq.top(); // binds weight to w and vertex to u
             pq.pop();               // removes the top element from the priority queue
 
             if (visited[u])
@@ -95,13 +95,13 @@ public: // public members accessible outside of MyGraph class
 private: // private members only accessible to MyGraph class
     // define the adjList private data member as an unordered map.
     // This data member maps each vertex to a vector of pairs, where each pair consists of a neighboring vertex & the weight of the edge that connects them
-    unordered_map<int, vector<pair<int, float>>> adjList;
+    unordered_map<int, vector<pair<int, float> > > adjList;
 
     void addVertex(int v)
     { // i (the current vertice) is passed into add vertex as V
         if (adjList.find(v) == adjList.end())
         {                                            // if the vertex is not in the adjList private data member then add
-            adjList[v] = vector<pair<int, float>>{}; // add the vertex to adjList data member
+            adjList[v] = vector<pair<int, float> >(); // add the vertex to adjList data member
         }
     }
 
