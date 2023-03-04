@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map> //included for private data member adjList
 #include <queue>         //included for priorityqueue declared in pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
+#include <stack> //included for HW2Prog method 
 using namespace std;
 class MyGraph
 {       // declaration of class MyGraph
@@ -112,7 +113,7 @@ public: // public members accessible outside of MyGraph class
             path.push_back(pathStack.top()); 
             pathStack.pop(); 
         }
-
+        
         //If printMST is true, output the MST to cout 
         if(printMST){
             cout << "Minimum Spanning Tree: " << endl; 

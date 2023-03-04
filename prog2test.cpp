@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-  ifstream ifile("proog2input.txt"); //opens input.txt file to read input 
+  ifstream ifile("prog2input.txt"); //opens input.txt file to read input 
   int n, e, c; //creates variables to store input 
 
   ifile >> n >> e >> c; //reads in input values to variables 
