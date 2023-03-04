@@ -90,6 +90,43 @@ public: // public members accessible outside of MyGraph class
                 }
             }
         }
+
+        //TODO - explain the below section better 
+        
+        //construct the path from s to t using the parent map 
+        stack<int> pathStack; 
+        float maxCapacity = numeric_limits<float>::max(); 
+        int currentNode = t; 
+        while(currentNode != s){
+            pathStack.push(currentNode); 
+            maxCapacity = min(maxCapacity, capacity[currentNode]); 
+            currentNode = parent[currentNode]; 
+        }
+
+        pathStack.push(s); 
+
+
+        //construct the vector of the path from s to t 
+        vector<int> path; 
+        while(!pathStack.empty()){
+            path.push_back(pathStack.top()); 
+            pathStack.pop(); 
+        }
+
+        //If printMST is true, output the MST to cout 
+        if(printMST){
+            cout << "Minimum Spanning Tree: " << endl; 
+            for(const auto& [vertex, parent] : parent){
+                if (vertex != s){
+                    cout << vertex << " -- " << parent << endl; 
+                }
+            }
+            cout << endl; 
+        }
+
+        return make_pair(path, maxCapacity); 
+
+        
     }
 
 private: // private members only accessible to MyGraph class
