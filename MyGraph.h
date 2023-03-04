@@ -41,25 +41,33 @@ private: // private members only accessible to MyGraph class
             return false; // return false because either a or b is not on the graph
         }
 
-        // check if the edge already exists on the graph 
-        for(const auto& neighbor : adjList[a]) //grab each vertex from the unordered map (adjList[a]) & check its neighbor value 
+        // check if the edge already exists on the graph
+        for (const auto &neighbor : adjList[a]) // grab each vertex from the unordered map (adjList[a]) & check its neighbor value
         {
-            if (neighbor.first == b){ //if the neighbor element is equal to b then 
-                return false; //the edge already exists on the graph 
+            if (neighbor.first == b)
+            {                 // if the neighbor element is equal to b then
+                return false; // the edge already exists on the graph
             }
-            //TODO - explain how this for loop breaks down the unordered map better 
+            // TODO - explain how this for loop breaks down the unordered map better
         }
 
-        //if the edge is not on the graph then it must be added to both adjacency lists a and b 
-        adjList[a].push_back(make_pair(b, w)); //make a pair of vertex b with its associated weight, w 
-        adjList[b].push_back(make_pair(a, w)); //make a pair of vertex a with its associated weight, w 
-        return true; 
-
+        // if the edge is not on the graph then it must be added to both adjacency lists a and b
+        adjList[a].push_back(make_pair(b, w)); // make a pair of vertex b with its associated weight, w
+        adjList[b].push_back(make_pair(a, w)); // make a pair of vertex a with its associated weight, w
+        return true;
     }
 
     void output(ostream &os)
     { // Output the graph to the ostream& specified
-
+        for (const auto &[vertex, neighbors] : adjList)
+        {                         // go through adjList and grab vertex and neighbors
+            os << vertex << ": "; // print vertex
+            for (const auto &neighbor : neighbors)
+            { // for each vertex, go through neighbors & print neighbor.first & neighbor.second
+                os << neighbor.first << "(" << neighbor.second << ") ";
+            }
+            os << endl; // endl for formatting
+        }
     }
 
     pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
