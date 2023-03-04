@@ -49,10 +49,17 @@ private: // private members only accessible to MyGraph class
             }
             //TODO - explain how this for loop breaks down the unordered map better 
         }
+
+        //if the edge is not on the graph then it must be added to both adjacency lists a and b 
+        adjList[a].push_back(make_pair(b, w)); //make a pair of vertex b with its associated weight, w 
+        adjList[b].push_back(make_pair(a, w)); //make a pair of vertex a with its associated weight, w 
+        return true; 
+
     }
 
     void output(ostream &os)
     { // Output the graph to the ostream& specified
+
     }
 
     pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
