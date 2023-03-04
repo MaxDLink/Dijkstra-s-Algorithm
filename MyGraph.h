@@ -19,7 +19,7 @@ private: // private members only accessible to MyGraph class
 
     MyGraph(const MyGraph &g)
     { // Construct a new graph that is a copy of g
-        adjList = g.adjList; 
+        adjList = g.adjList;
     }
 
     void addVertex(int v)
@@ -31,7 +31,24 @@ private: // private members only accessible to MyGraph class
     }
 
     bool addEdge(int a, int b, float w)
-    { // Add an edge between vertex a and b, with weight w.If the edge already exists or a vertex is not on the graph, do nothing and return false. Otherwise (addition is successful) return true.
+    {
+        // Add an edge between vertex a and b, with weight w.
+        // If the edge already exists or a vertex is not on the graph, do nothing and return false.
+        // Otherwise (addition is successful) return true.
+
+        if (adjList.find(a) == adjList.end() || adjList.find(b) == adjList.end()) // if int a is not found or int b is not found in adjList private data member then
+        {
+            return false; // return false because either a or b is not on the graph
+        }
+
+        // check if the edge already exists on the graph 
+        for(const auto& neighbor : adjList[a]) //grab each vertex from the unordered map (adjList[a]) & check its neighbor value 
+        {
+            if (neighbor.first == b){ //if the neighbor element is equal to b then 
+                return false; //the edge already exists on the graph 
+            }
+            //TODO - explain how this for loop breaks down the unordered map better 
+        }
     }
 
     void output(ostream &os)
