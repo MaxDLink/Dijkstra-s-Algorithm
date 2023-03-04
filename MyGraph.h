@@ -1,6 +1,6 @@
 #include <iostream>
 #include <unordered_map> //included for private data member adjList
-#include <queue> //included for priorityqueue declared in pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
+#include <queue>         //included for priorityqueue declared in pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
 using namespace std;
 class MyGraph
 {        // declaration of class MyGraph
@@ -72,48 +72,49 @@ private: // private members only accessible to MyGraph class
     }
 
     pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
-    { 
-        //return the route from s to t with highest capacity The return will be a pair. 
-        //First item of the pair (vector) denotes the path from s to t. 
-        //The second item (float) denote the actual capacity of the route
+    {
+        // return the route from s to t with highest capacity The return will be a pair.
+        // First item of the pair (vector) denotes the path from s to t.
+        // The second item (float) denote the actual capacity of the route
 
-        //create a priority que to store the vertices that must be explored 
-        priority_queue<pair<float, int>> pq; 
+        // create a priority que to store the vertices that must be explored
+        priority_queue<pair<float, int>> pq;
 
-        //initialize the pq 
-        pq.push(make_pair(numeric_limits<float>::max(), s)); //Add s to the priority queue with infinite weight 
-        unordered_map<int, int> parent; //map each vertex to its parent in the MST 
-        unordered_map<int, float> capacity; //map each vertex to the capacity of the edge connecting it to its parent 
-        unordered_map<int, bool> visited; //map each vertex to whether it has been visited 
+        // initialize the pq
+        pq.push(make_pair(numeric_limits<float>::max(), s)); // Add s to the priority queue with infinite weight
+        unordered_map<int, int> parent;                      // map each vertex to its parent in the MST
+        unordered_map<int, float> capacity;                  // map each vertex to the capacity of the edge connecting it to its parent
+        unordered_map<int, bool> visited;                    // map each vertex to whether it has been visited
 
-        while(!pq.empty())//while the priority queue is not empty 
+        while (!pq.empty()) // while the priority queue is not empty
         {
-            //get the vertex with the maximum weight in the priority queue 
-            auto [w, u] = pq.top(); //binds weight to w and vertex to u 
-            pq.pop(); //removes the top element from the priority queue 
+            // get the vertex with the maximum weight in the priority queue
+            auto [w, u] = pq.top(); // binds weight to w and vertex to u
+            pq.pop();               // removes the top element from the priority queue
 
-            if(visited[u]){ //if the vertex, u, is visited then 
-                continue; //execute the next iteration of the loop because you've already visited the vertex 
+            if (visited[u])
+            {             // if the vertex, u, is visited then
+                continue; // execute the next iteration of the loop because you've already visited the vertex
             }
-            
-            //you havent set the visit status to true yet to indicate that the vertex has been visted
-            //do that here 
-            visited[u] == true; 
 
-            //update the parent and capacity of each neighbor of u 
-            for(const auto& [v, weight] : adjList[u]){//grab the vertex and weight of the adjList map 
-                if(!visited[v]){//if the vertex has not been visited then 
-                    if(weight < capacity[v]){//compare that vertexes weight to capacity. If weight is less than capacity then 
-                        capacity[v] = weight; //change capacity of vertex to its associated weight
-                        parent[v] = u; //change the parent of the vertex to the visited vertex 
-                        pq.push(make_pair(capacity[v], v)); //add the capacity of the vertex and the vertex to the priority queue 
-                        //TODO - explain this better 
+            // you havent set the visit status to true yet to indicate that the vertex has been visted
+            // do that here
+            visited[u] == true;
+
+            // update the parent and capacity of each neighbor of u
+            for (const auto &[v, weight] : adjList[u])
+            { // grab the vertex and weight of the adjList map
+                if (!visited[v])
+                { // if the vertex has not been visited then
+                    if (weight < capacity[v])  // compare that vertexes weight to capacity. If weight is less than capacity then
+                    {                                       
+                        capacity[v] = weight;               // change capacity of vertex to its associated weight
+                        parent[v] = u;                      // change the parent of the vertex to the visited vertex
+                        pq.push(make_pair(capacity[v], v)); // add the capacity of the vertex and the vertex to the priority queue
+                        // TODO - explain this better
                     }
                 }
             }
-
-
         }
-
     }
 };
