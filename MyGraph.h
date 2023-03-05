@@ -65,12 +65,12 @@ public: // public members accessible outside of MyGraph class
         // First item of the pair (vector) denotes the path from s to t.
         // The second item (float) denote the actual capacity of the route
 
-        cout << "HW2Prog" << endl; 
+        cout << "HW2Prog" << endl;
         // create a priority que to store the vertices that must be explored
-        priority_queue<pair<float, int> > pq;
+        priority_queue<pair<float, int>> pq;
 
         /*
-            //TODO - Fix HW2Prog so that prints to console 
+            //TODO - Fix HW2Prog so that prints to console
 
          vector<int> path;
          float maxCapacity = numeric_limits<float>::max();
@@ -97,7 +97,7 @@ public: // public members accessible outside of MyGraph class
 
             // you havent set the visit status to true yet to indicate that the vertex has been visted
             // do that here
-            visited[u] == true;
+            visited[u] = true;
 
             // update the parent and capacity of each neighbor of u
             for (const auto &[v, weight] : adjList[u])
@@ -118,26 +118,20 @@ public: // public members accessible outside of MyGraph class
         // TODO - explain the below section better
 
         // construct the path from s to t using the parent map
-        //TODO - stack manipulation takes forever. Make faster. 
-        stack<int> pathStack;
+        vector<int> path;
         float maxCapacity = numeric_limits<float>::max();
         int currentNode = t;
         while (currentNode != s)
         {
-            pathStack.push(currentNode);
+            path.push_back(currentNode);
             maxCapacity = min(maxCapacity, capacity[currentNode]);
             currentNode = parent[currentNode];
         }
 
-        pathStack.push(s);
+        path.push_back(s);
 
-        // construct the vector of the path from s to t
-        vector<int> path;
-        while (!pathStack.empty())
-        {
-            path.push_back(pathStack.top());
-            pathStack.pop();
-        }
+        // reverse the path to obtain the correct order
+        reverse(path.begin(), path.end());
 
         // If printMST is true, output the MST to cout
         if (printMST)
@@ -154,14 +148,12 @@ public: // public members accessible outside of MyGraph class
         }
 
         return make_pair(path, maxCapacity);
-        
     }
-
 
 private: // private members only accessible to MyGraph class
     // define the adjList private data member as an unordered map.
     // This data member maps each vertex to a vector of pairs, where each pair consists of a neighboring vertex & the weight of the edge that connects them
-    unordered_map<int, vector<pair<int, float> > > adjList;
+    unordered_map<int, vector<pair<int, float>>> adjList;
 
     void addVertex(int v)
     { // i (the current vertice) is passed into add vertex as V
