@@ -1,7 +1,10 @@
 #include <iostream>
 #include <unordered_map> //included for private data member adjList
 #include <queue>         //included for priorityqueue declared in pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
-#include <stack>         //included for HW2Prog method
+#include <limits>        //included for HW2Prog Dijstra's algo
+#include <utility>       //included for HW2Prog Dijstra's algo
+#include <vector>        //included for HW2Prog Dijstra's algo
+
 using namespace std;
 class MyGraph
 {       // declaration of class MyGraph
@@ -61,61 +64,40 @@ public: // public members accessible outside of MyGraph class
 
     pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
     {
-        // return the route from s to t with highest capacity The return will be a pair.
-        // First item of the pair (vector) denotes the path from s to t.
-        // The second item (float) denote the actual capacity of the route
+        // initialize variables
+        const int N = adjList.size(); // N is the number of nodes in the graph
+        vector<int> parent(N, -1);
+        vector<float> dist(N, numeric_limits<float>::max());
+        priority_queue<pair<float, int>, vector<pair<float, int>>, greater<pair<float, int>>> pq;
+        vector<vector<float>> capacity(N, vector<float>(N, 0)); // capacity stores the capacities of the edges in the graph
 
-        cout << "HW2Prog" << endl;
-        // create a priority que to store the vertices that must be explored
-        priority_queue<pair<float, int>> pq;
-
-        /*
-            //TODO - Fix HW2Prog so that prints to console
-
-         vector<int> path;
-         float maxCapacity = numeric_limits<float>::max();
-
-        return make_pair(path, maxCapacity);
-        */
-
-        // initialize the pq
-        pq.push(make_pair(numeric_limits<float>::max(), s)); // Add s to the priority queue with infinite weight
-        unordered_map<int, int> parent;                      // map each vertex to its parent in the MST
-        unordered_map<int, float> capacity;                  // map each vertex to the capacity of the edge connecting it to its parent
-        unordered_map<int, bool> visited;                    // map each vertex to whether it has been visited
-
-        while (!pq.empty()) // while the priority queue is not empty
+        // initialize capacity of each edge
+        for (int u = 0; u < N; u++)
         {
-            // get the vertex with the maximum weight in the priority queue
-            const auto [w, u] = pq.top(); // binds weight to w and vertex to u
-            pq.pop();                     // removes the top element from the priority queue
-
-            if (visited[u])
-            {             // if the vertex, u, is visited then
-                continue; // execute the next iteration of the loop because you've already visited the vertex
-            }
-
-            // you havent set the visit status to true yet to indicate that the vertex has been visted
-            // do that here
-            visited[u] = true;
-
-            // update the parent and capacity of each neighbor of u
-            for (const auto &[v, weight] : adjList[u])
-            { // grab the vertex and weight of the adjList map
-                if (!visited[v])
-                {                             // if the vertex has not been visited then
-                    if (weight < capacity[v]) // compare that vertexes weight to capacity. If weight is less than capacity then
-                    {
-                        capacity[v] = weight;               // change capacity of vertex to its associated weight
-                        parent[v] = u;                      // change the parent of the vertex to the visited vertex
-                        pq.push(make_pair(capacity[v], v)); // add the capacity of the vertex and the vertex to the priority queue
-                        // TODO - explain this better
-                    }
-                }
+            for (auto &v : adjList[u])
+            {
+                capacity[u][v.first] = v.second;
             }
         }
 
-        // TODO - explain the below section better
+        // Dijkstra's algorithm to find shortest path
+        pq.push(make_pair(0, s));
+        dist[s] = 0;
+        while (!pq.empty())
+        {
+            int u = pq.top().second;
+            pq.pop();
+            for (auto &v : adjList[u])
+            {
+                float alt = dist[u] + v.second;
+                if (alt < dist[v.first])
+                {
+                    dist[v.first] = alt;
+                    parent[v.first] = u;
+                    pq.push(make_pair(dist[v.first], v.first));
+                }
+            }
+        }
 
         // construct the path from s to t using the parent map
         vector<int> path;
@@ -124,7 +106,7 @@ public: // public members accessible outside of MyGraph class
         while (currentNode != s)
         {
             path.push_back(currentNode);
-            maxCapacity = min(maxCapacity, capacity[currentNode]);
+            maxCapacity = min(maxCapacity, capacity[parent[currentNode]][currentNode]); // <-- min is defined in <algorithm>
             currentNode = parent[currentNode];
         }
 
@@ -133,20 +115,7 @@ public: // public members accessible outside of MyGraph class
         // reverse the path to obtain the correct order
         reverse(path.begin(), path.end());
 
-        // If printMST is true, output the MST to cout
-        if (printMST)
-        {
-            cout << "Minimum Spanning Tree: " << endl;
-            for (const auto &[vertex, parent] : parent)
-            {
-                if (vertex != s)
-                {
-                    cout << vertex << " -- " << parent << endl;
-                }
-            }
-            cout << endl;
-        }
-
+        // return the path and maximum capacity
         return make_pair(path, maxCapacity);
     }
 
@@ -159,7 +128,7 @@ private: // private members only accessible to MyGraph class
     { // i (the current vertice) is passed into add vertex as V
         if (adjList.find(v) == adjList.end())
         {                                            // if the vertex is not in the adjList private data member then add
-            adjList[v] = vector<pair<int, float> >(); // add the vertex to adjList data member
+            adjList[v] = vector<pair<int, float>>(); // add the vertex to adjList data member
         }
     }
 };
