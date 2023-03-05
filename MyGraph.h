@@ -1,7 +1,7 @@
 #include <iostream>
 #include <unordered_map> //included for private data member adjList
 #include <queue>         //included for priorityqueue declared in pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
-#include <stack> //included for HW2Prog method 
+#include <stack>         //included for HW2Prog method
 using namespace std;
 class MyGraph
 {       // declaration of class MyGraph
@@ -46,14 +46,37 @@ public: // public members accessible outside of MyGraph class
         return true;
     }
 
+    void output(ostream &os)
+    { // Output the graph to the ostream& specified
+        for (const auto &[vertex, neighbors] : adjList)
+        {                         // go through adjList and grab vertex and neighbors
+            os << vertex << ": "; // print vertex
+            for (const auto &neighbor : neighbors)
+            { // for each vertex, go through neighbors & print neighbor.first & neighbor.second
+                os << neighbor.first << "(" << neighbor.second << ") ";
+            }
+            os << endl; // endl for formatting
+        }
+    }
+
     pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
     {
         // return the route from s to t with highest capacity The return will be a pair.
         // First item of the pair (vector) denotes the path from s to t.
         // The second item (float) denote the actual capacity of the route
 
+        cout << "HW2Prog" << endl; 
         // create a priority que to store the vertices that must be explored
         priority_queue<pair<float, int> > pq;
+
+        /*
+            //TODO - Fix HW2Prog so that prints to console 
+
+         vector<int> path;
+         float maxCapacity = numeric_limits<float>::max();
+
+        return make_pair(path, maxCapacity);
+        */
 
         // initialize the pq
         pq.push(make_pair(numeric_limits<float>::max(), s)); // Add s to the priority queue with infinite weight
@@ -65,7 +88,7 @@ public: // public members accessible outside of MyGraph class
         {
             // get the vertex with the maximum weight in the priority queue
             const auto [w, u] = pq.top(); // binds weight to w and vertex to u
-            pq.pop();               // removes the top element from the priority queue
+            pq.pop();                     // removes the top element from the priority queue
 
             if (visited[u])
             {             // if the vertex, u, is visited then
@@ -92,43 +115,48 @@ public: // public members accessible outside of MyGraph class
             }
         }
 
-        //TODO - explain the below section better 
-        
-        //construct the path from s to t using the parent map 
-        stack<int> pathStack; 
-        float maxCapacity = numeric_limits<float>::max(); 
-        int currentNode = t; 
-        while(currentNode != s){
-            pathStack.push(currentNode); 
-            maxCapacity = min(maxCapacity, capacity[currentNode]); 
-            currentNode = parent[currentNode]; 
+        // TODO - explain the below section better
+
+        // construct the path from s to t using the parent map
+        //TODO - stack manipulation takes forever. Make faster. 
+        stack<int> pathStack;
+        float maxCapacity = numeric_limits<float>::max();
+        int currentNode = t;
+        while (currentNode != s)
+        {
+            pathStack.push(currentNode);
+            maxCapacity = min(maxCapacity, capacity[currentNode]);
+            currentNode = parent[currentNode];
         }
 
-        pathStack.push(s); 
+        pathStack.push(s);
 
-
-        //construct the vector of the path from s to t 
-        vector<int> path; 
-        while(!pathStack.empty()){
-            path.push_back(pathStack.top()); 
-            pathStack.pop(); 
+        // construct the vector of the path from s to t
+        vector<int> path;
+        while (!pathStack.empty())
+        {
+            path.push_back(pathStack.top());
+            pathStack.pop();
         }
-        
-        //If printMST is true, output the MST to cout 
-        if(printMST){
-            cout << "Minimum Spanning Tree: " << endl; 
-            for(const auto& [vertex, parent] : parent){
-                if (vertex != s){
-                    cout << vertex << " -- " << parent << endl; 
+
+        // If printMST is true, output the MST to cout
+        if (printMST)
+        {
+            cout << "Minimum Spanning Tree: " << endl;
+            for (const auto &[vertex, parent] : parent)
+            {
+                if (vertex != s)
+                {
+                    cout << vertex << " -- " << parent << endl;
                 }
             }
-            cout << endl; 
+            cout << endl;
         }
 
-        return make_pair(path, maxCapacity); 
-
+        return make_pair(path, maxCapacity);
         
     }
+
 
 private: // private members only accessible to MyGraph class
     // define the adjList private data member as an unordered map.
@@ -140,19 +168,6 @@ private: // private members only accessible to MyGraph class
         if (adjList.find(v) == adjList.end())
         {                                            // if the vertex is not in the adjList private data member then add
             adjList[v] = vector<pair<int, float> >(); // add the vertex to adjList data member
-        }
-    }
-
-    void output(ostream &os)
-    { // Output the graph to the ostream& specified
-        for (const auto &[vertex, neighbors] : adjList)
-        {                         // go through adjList and grab vertex and neighbors
-            os << vertex << ": "; // print vertex
-            for (const auto &neighbor : neighbors)
-            { // for each vertex, go through neighbors & print neighbor.first & neighbor.second
-                os << neighbor.first << "(" << neighbor.second << ") ";
-            }
-            os << endl; // endl for formatting
         }
     }
 };
