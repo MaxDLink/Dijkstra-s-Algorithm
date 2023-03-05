@@ -32,7 +32,11 @@ public: // public members accessible outside of MyGraph class
         {
             return false; // return false because either a or b is not on the graph
         }
-
+        //checks for an empty vector before it loops through adjList
+        if (adjList[a].empty())
+        {
+            return false;
+        }
         // check if the edge already exists on the graph
         for (const auto &neighbor : adjList[a]) // grab each vertex from the unordered map (adjList[a]) & check its neighbor value
         {
@@ -68,8 +72,8 @@ public: // public members accessible outside of MyGraph class
         const int N = adjList.size(); // N is the number of nodes in the graph
         vector<int> parent(N, -1);
         vector<float> dist(N, numeric_limits<float>::max());
-        priority_queue<pair<float, int>, vector<pair<float, int>>, greater<pair<float, int>>> pq;
-        vector<vector<float>> capacity(N, vector<float>(N, 0)); // capacity stores the capacities of the edges in the graph
+        priority_queue<pair<float, int>, vector<pair<float, int> >, greater<pair<float, int> > > pq;
+        vector<vector<float> > capacity(N, vector<float>(N, 0)); // capacity stores the capacities of the edges in the graph
 
         // initialize capacity of each edge
         for (int u = 0; u < N; u++)
@@ -113,7 +117,11 @@ public: // public members accessible outside of MyGraph class
         path.push_back(s);
 
         // reverse the path to obtain the correct order
-        reverse(path.begin(), path.end());
+
+        if (!path.empty()) {//checks if path is empty before it reverses the path 
+            reverse(path.begin(), path.end());
+        }
+        //reverse(path.begin(), path.end());
 
         // return the path and maximum capacity
         return make_pair(path, maxCapacity);
@@ -122,13 +130,13 @@ public: // public members accessible outside of MyGraph class
 private: // private members only accessible to MyGraph class
     // define the adjList private data member as an unordered map.
     // This data member maps each vertex to a vector of pairs, where each pair consists of a neighboring vertex & the weight of the edge that connects them
-    unordered_map<int, vector<pair<int, float>>> adjList;
+    unordered_map<int, vector<pair<int, float> > > adjList;
 
     void addVertex(int v)
     { // i (the current vertice) is passed into add vertex as V
         if (adjList.find(v) == adjList.end())
         {                                            // if the vertex is not in the adjList private data member then add
-            adjList[v] = vector<pair<int, float>>(); // add the vertex to adjList data member
+            adjList[v] = vector<pair<int, float> >(); // add the vertex to adjList data member
         }
     }
 };
