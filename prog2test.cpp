@@ -55,3 +55,10 @@ int main()
 
   return (0);
 }
+
+//TODO - GOAL: given all input info: want to go from Digim to KRider, whats the maximum amount of passengers you can take without stopping? Previous edge limits capacity if you go back regardless of if you go through other edges with bigger capacity. 
+//TODO - EDGE WEIGHT IS FLOATING POINT # NOT INTEGERS 
+//TODO - adjList, adjMatrix, edgeList, or your own structure 
+//TODO - class can post their own test set. Must have at least 5 towns, at least n + 3 rail segment (edges) where n is the # of vertices, mjst query at least 2 pair of cities. For at least 1 pair, route with the maximum capacity must be made up of at least 2 segments. 
+//TODO - can also verify others test sets and get points 
+
