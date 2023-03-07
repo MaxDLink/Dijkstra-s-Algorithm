@@ -109,9 +109,9 @@ public: // public members accessible outside of MyGraph class
         float maxCapacity = numeric_limits<float>::max();
         int currentNode = t;
         while (currentNode != s)
-        {
+        {//TODO - these lines cause seg fault?
             path.push_back(currentNode);
-            maxCapacity = min(maxCapacity, capacity[parent[currentNode]][currentNode]); // <-- min is defined in <algorithm>
+            maxCapacity = min(maxCapacity, capacity[parent[currentNode]][currentNode]); //min is defined in <algorithm>
             currentNode = parent[currentNode];
         }
 
