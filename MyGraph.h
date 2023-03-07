@@ -11,7 +11,7 @@ class MyGraph
 public: // public members accessible outside of MyGraph class
     MyGraph(int n)
     {                               // Create a graph with n vertices. The vertices are labelled 1..n. Can use adjacency list or adjacency matrix.
-        for (int i = 1; i < n; i++) // loop through all your n values
+        for (int i = 1; i <= n; i++) // loop through all your n values
         {
             addVertex(i); // call the addVertex function
         }
@@ -68,6 +68,7 @@ public: // public members accessible outside of MyGraph class
 
     pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
     {
+        //TODO - seg fault in this method 
         // initialize variables
         const int N = adjList.size(); // N is the number of nodes in the graph
         vector<int> parent(N, -1);
