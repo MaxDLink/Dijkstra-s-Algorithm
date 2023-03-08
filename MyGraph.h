@@ -112,7 +112,7 @@ public: // public members accessible outside of MyGraph class
         while (currentNode != s) //loops through currentNode while currentNode does not equal the source node 
         {//TODO - these lines cause seg fault?
             path.push_back(currentNode); //pushes currentNode to the path vector 
-            cout << "PATH: " << path.at(currentNode); 
+            cout << "PATH: " << currentNode; //TODO - this line was causing the seg fault when it was path.at(currentNode) instead of currentNode
             maxCapacity = min(maxCapacity, capacity[parent[currentNode]][currentNode]); //maxCapacity gets filled by putting values in the min function 
             currentNode = parent[currentNode]; //currentNode gets set to a parent integer based on the currentNode position 
         }
@@ -141,4 +141,4 @@ private: // private members only accessible to MyGraph class
             adjList[v] = vector<pair<int, float> >(); // add the vertex to adjList data member
         }
     }
-};
+}; 
