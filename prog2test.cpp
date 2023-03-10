@@ -41,6 +41,7 @@ int main()
     // vector<int> path;
     // float maxCapacity = numeric_limits<float>::max();
     // pair<vector<int>, float> res = make_pair(path, maxCapacity);
+    //TODO - gets through i = 0 but seg faults at i = 1? debugger issue because entering second time? try on windows? 
     pair<vector<int>, float> res = g.HW2Prog(p[i], q[i], true); //calls HW2Prog method and stores results in res
     resarray.push_back(res); // pushes res into resarray
   }
