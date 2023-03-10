@@ -69,7 +69,6 @@ public: // public members accessible outside of MyGraph class
 
     pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
     {
-        //TODO - seg fault in this method 
         // initialize variables
         const int N = adjList.size(); // N is the number of nodes in the graph
         vector<int> parent(N, -1); //vector that holds parent integers 
