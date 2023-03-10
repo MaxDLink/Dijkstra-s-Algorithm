@@ -29,30 +29,41 @@ public: // public members accessible outside of MyGraph class
         // If the edge already exists or a vertex is not on the graph, do nothing and return false.
         // Otherwise (addition is successful) return true.
 
-        if (adjList.find(a) == adjList.end() || adjList.find(b) == adjList.end()) // if int a is not found or int b is not found in adjList private data member then
-        {
-            return false; // return false because either a or b is not on the graph
-        }
-        //checks for an empty vector before it loops through adjList
-        if (adjList[a].empty())
-        {
+        // Check if both vertices are in the graph
+        if (vertexExists(a, b)) {//if vertex a or b exists in the graph
             return false;
         }
-        // check if the edge already exists on the graph
-        for (const auto &neighbor : adjList[a]) // grab each vertex from the unordered map (adjList[a]) & check its neighbor value
-        {
-            if (neighbor.first == b)
-            {                 // if the neighbor element is equal to b then
-                return false; // the edge already exists on the graph
+    
+        // Check if the edge already exists
+        for (auto &v : adjList[a]) {
+            if (v.first == b) {
+                return false;
             }
-            // TODO - explain how this for loop breaks down the unordered map better
         }
-
-        // if the edge is not on the graph then it must be added to both adjacency lists a and b
-        adjList[a].push_back(make_pair(b, w)); // make a pair of vertex b with its associated weight, w
-        adjList[b].push_back(make_pair(a, w)); // make a pair of vertex a with its associated weight, w
+    
+        // Add the edge
+        adjList[a].push_back(make_pair(b, w));
+        adjList[b].push_back(make_pair(a, w));
         return true;
+
     }
+
+    bool vertexExists(int a, int b) {
+        bool check = false; //set to false because do not know if vectors are on graph yet 
+        for(auto& v : adjList[a]){
+            if(v.first == b){
+                 check = true; //vector a exists on graph so return true
+                 return check; //return check 
+            }
+        }
+        for(auto& v : adjList[b]){
+            if(v.first == a){
+                 check = true; //vector b exists on graph so return true
+                 return check; //return check 
+            }
+        }
+        return check; //return check 
+    }   
 
     void output(ostream &os)
     { // Output the graph to the ostream& specified
@@ -75,7 +86,8 @@ public: // public members accessible outside of MyGraph class
         vector<float> dist(N, numeric_limits<float>::max()); //vector that holds floats & measures dist? 
         priority_queue<pair<float, int>, vector<pair<float, int> >, greater<pair<float, int> > > pq; //priority Queue that holds pairs 
         vector<vector<float> > capacity(N, vector<float>(N, 0)); // capacity stores the capacities of the edges in the graph
-
+        
+        
         // initialize capacity of each edge
         for (int u = 0; u < N; u++) //loops through number of Nodes 
         {
