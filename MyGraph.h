@@ -99,14 +99,13 @@ public: // public members accessible outside of MyGraph class
         }
     }
 
-
-    pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
+pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
     {
         // initialize variables
         const int N = adjList.size(); // N is the number of nodes in the graph
         vector<int> parent(N, -1); //vector that holds parent integers 
-        vector<float> dist(N, numeric_limits<float>::max()); //vector that holds floats & measures dist? 
-        priority_queue<pair<float, int>, vector<pair<float, int> >, greater<pair<float, int> > > pq; //priority Queue that holds pairs 
+        vector<float> dist(N, numeric_limits<float>::min()); //vector that holds floats & measures dist? 
+        priority_queue<pair<float, int>, vector<pair<float, int> > > pq; //priority Queue that holds pairs 
         vector<vector<float> > capacity(N, vector<float>(N, 0)); // capacity stores the capacities of the edges in the graph
         
         
@@ -119,6 +118,11 @@ public: // public members accessible outside of MyGraph class
                 cout << "Capacity: " << capacity[u][v.first] << endl; 
             }
         }
+
+
+
+/*
+        //Origninal Dijsktra (finds the shortest path, not applicable to this programming assignment)
         //TODO - adjust this algorithm to find the route with the greatest capacity. I.E.: 2--> 0 --> 1 = 7 instead of 2 --> 1 = 5 
         // Dijkstra's algorithm to find shortest path
         pq.push(make_pair(0, s)); //push to priority queue 
@@ -131,31 +135,59 @@ public: // public members accessible outside of MyGraph class
             {
                 float alt = dist[u] + v.second; //add dist[u] to v.second for alt 
                 if (alt < dist[v.first]) //only if alt is less than dist[v.first]
-                {
+                {//flip < to > to find greatest dist (capacity)
                     dist[v.first] = alt; //set dist[v.first] to alt 
                     parent[v.first] = u; //set parent[v.first] to u 
+                    cout << "FOUND: " << dist[v.first] << " WITH: " << v.first << endl; 
                     pq.push(make_pair(dist[v.first], v.first)); //push dist[v.first], v.first to priority queue 
+                }
+            }
+        }
+            */
+
+        //dijskstra algo modified for finding the highest capacity path 
+        dist[s] = numeric_limits<float>::max(); // start with s
+        pq.push(make_pair(dist[s], s)); //push s and its max distance
+        while (!pq.empty()) {
+            int u = pq.top().second;
+            pq.pop();
+            if (u == t)
+                break;
+            for (auto &v : adjList[u]) {
+                int neighbor = v.first;
+                float weight = v.second;
+                float alt = min(dist[u], capacity[u][neighbor]);
+                if (alt > dist[neighbor]) {
+                    dist[neighbor] = alt;
+                    parent[neighbor] = u;
+                    pq.push(make_pair(dist[neighbor], neighbor));
+                }
+            }
+        }
+
+        // Output the MST
+        if (printMST) {
+            cout << "MST:" << endl;
+            for (int i = 0; i < N; i++) {
+                if (parent[i] != -1) {
+                    cout << parent[i] << " - " << i << endl;
                 }
             }
         }
 
         // construct the path from s to t using the parent map
         vector<int> path; //path vector 
-        float maxCapacity = numeric_limits<float>::max(); //create a float that stores the maximum capacity. Just a declaration here.  
+        float max_flow = dist[t]; 
         int currentNode = t; //sets currentNode = to t 
         while (currentNode != s) //loops through currentNode while currentNode does not equal the source node 
-        {//TODO - these lines cause seg fault?
+        {
             path.push_back(currentNode); //pushes currentNode to the path vector 
-            cout << "PATH: " << currentNode << endl; //TODO - this line was causing the seg fault when it was path.at(currentNode) instead of currentNode
+            // cout << "PATH: " << currentNode << endl; //TODO - this line was causing the seg fault when it was path.at(currentNode) instead of currentNode
             parent[currentNode] = s; 
-            cout << "parent[currentNode]: " << parent[currentNode] << endl; 
-            cout << "Capacity: " << capacity[parent[currentNode]][currentNode] << endl; 
-            cout << "MAXCAP BEFORE: " << maxCapacity << endl; 
-            if(parent[currentNode] != -1 && capacity[parent[currentNode]][currentNode] > 0){
-                 maxCapacity = min(maxCapacity, capacity[parent[currentNode]][currentNode]); //maxCapacity gets filled by putting values in the min function 
-                 cout << "MAXCAP AFTER: " << maxCapacity << endl; 
-            }
-            cout << "parent[currentNode]: " << parent[currentNode] << endl; 
+            // cout << "parent[currentNode]: " << parent[currentNode] << endl; 
+            // cout << "Capacity: " << capacity[parent[currentNode]][currentNode] << endl; 
+            // cout << "MAXCAP BEFORE: " << max_flow << endl; 
+            // cout << "parent[currentNode]: " << parent[currentNode] << endl; 
             currentNode = parent[currentNode]; //currentNode gets set to a parent integer based on the currentNode position 
         }
 
@@ -168,9 +200,9 @@ public: // public members accessible outside of MyGraph class
         }
 
         // return the path and maximum capacity
-        return make_pair(path, maxCapacity);
-    }
-
+        return make_pair(path, max_flow);
+    } 
+    
 private: 
     // private members only accessible to MyGraph class
     // define the adjList private data member as an unordered map.
