@@ -2,7 +2,7 @@
 #include <fstream>
 #include <vector>
 #include "MyGraph.h"
-
+#include "MyGraph.cpp"
 #include <chrono> //included for timing for loop 
 
 using namespace std;
