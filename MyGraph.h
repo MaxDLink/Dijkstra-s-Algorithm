@@ -119,7 +119,7 @@ public: // public members accessible outside of MyGraph class
                 //cout << "Capacity: " << capacity[u][v.first] << endl; 
             }
         }
-
+        //TODO - adjust this algorithm to find the route with the greatest capacity. I.E.: 2--> 0 --> 1 = 7 instead of 2 --> 1 = 5 
         // Dijkstra's algorithm to find shortest path
         pq.push(make_pair(0, s)); //push to priority queue 
         dist[s] = 0; //set dist to zero 
