@@ -116,7 +116,7 @@ public: // public members accessible outside of MyGraph class
             for (auto &v : adjList[u]) //v pulls from adjList at a particular node N 
             {
                 capacity[u][v.first] = v.second; //set capacity first position to the vector pair value of adjList 
-                //cout << "Capacity: " << capacity[u][v.first] << endl; 
+                cout << "Capacity: " << capacity[u][v.first] << endl; 
             }
         }
         //TODO - adjust this algorithm to find the route with the greatest capacity. I.E.: 2--> 0 --> 1 = 7 instead of 2 --> 1 = 5 
@@ -150,9 +150,10 @@ public: // public members accessible outside of MyGraph class
             parent[currentNode] = s; 
             cout << "parent[currentNode]: " << parent[currentNode] << endl; 
             cout << "Capacity: " << capacity[parent[currentNode]][currentNode] << endl; 
+            cout << "MAXCAP BEFORE: " << maxCapacity << endl; 
             if(parent[currentNode] != -1 && capacity[parent[currentNode]][currentNode] > 0){
                  maxCapacity = min(maxCapacity, capacity[parent[currentNode]][currentNode]); //maxCapacity gets filled by putting values in the min function 
-                 cout << "MAXCAP: " << maxCapacity << endl; 
+                 cout << "MAXCAP AFTER: " << maxCapacity << endl; 
             }
             cout << "parent[currentNode]: " << parent[currentNode] << endl; 
             currentNode = parent[currentNode]; //currentNode gets set to a parent integer based on the currentNode position 
