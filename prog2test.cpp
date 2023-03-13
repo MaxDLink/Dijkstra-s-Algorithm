@@ -6,14 +6,14 @@
 using namespace std;
 
 int main()
-{
+{ 
   ifstream ifile("prog2input.txt"); // opens input.txt file to read input
-  int n, e, c;                      // creates variables to store input
+  int n, edges, c;                      // creates variables to store input
 
-  ifile >> n >> e >> c; // reads in input values to variables
+  ifile >> n >> edges >> c; // reads in input values to variables
   MyGraph g(n);         // creates graph object
 
-  for (int i = 0; i < e; i++) // loops through all edges in the graph
+  for (int i = 0; i < edges; i++) // loops through all edges in the graph
   {
     int s, t;
     float w;
@@ -24,10 +24,12 @@ int main()
   vector<int> p, q;           // create vectors p and q
   for (int i = 0; i < c; i++) // c represents vertex pairs for which the highest capacity path needs to be computed
   {
-    int s, t;
-    ifile >> s >> t; // start vertex and end vertex assigned to s and t respectively
-    p.push_back(s);  // p vector gets start vertex
-    q.push_back(t);  // q vector gets end vertex
+    int startV, endV;
+    ifile >> startV >> endV; // start vertex and end vertex assigned to s and t respectively
+    cout << "START: " << startV << endl; 
+    cout << "ENDV: " << endV << endl; 
+    p.push_back(startV);  // p vector gets start vertex
+    q.push_back(endV);  // q vector gets end vertex
   }
 
   ifile.close(); // close file

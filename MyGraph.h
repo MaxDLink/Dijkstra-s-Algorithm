@@ -4,6 +4,7 @@
 #include <limits>        //included for HW2Prog Dijstra's algo
 #include <utility>       //included for HW2Prog Dijstra's algo
 #include <vector>        //included for HW2Prog Dijstra's algo
+#include <algorithm>     //included for HW2Prog reverse path vector 
 
 using namespace std;
 //TODO - implement steps in syllabus's algorithm overview
@@ -12,7 +13,7 @@ class MyGraph
 public: // public members accessible outside of MyGraph class
     MyGraph(int n)
     {                               // Create a graph with n vertices. The vertices are labelled 1..n. Can use adjacency list or adjacency matrix.
-        for (int i = 1; i <= n; i++) // loop through all your n values
+        for (int i = 1; i < n; i++) // loop through all your n values
         {
             addVertex(i); // call the addVertex function
         }
@@ -44,7 +45,9 @@ public: // public members accessible outside of MyGraph class
         // Add the edge
         adjList[a].push_back(make_pair(b, w));
         adjList[b].push_back(make_pair(a, w));
+        printAdjList(adjList); //TODO - for testing purposes only. 
         return true;
+
 
     }
 
@@ -77,6 +80,25 @@ public: // public members accessible outside of MyGraph class
             os << endl; // endl for formatting
         }
     }
+    //TODO - for testing purposes. Check if adjList is filled correctly. 
+    void printAdjList(const unordered_map<int, vector<pair<int, float> > >& adjList) {
+        // Iterate over each key-value pair in the map
+        for (const auto& kvp : adjList) {
+            int sourceNode = kvp.first;
+            const vector<pair<int, float> >& neighbors = kvp.second;
+            
+            // Print the source node and its neighbors
+            cout << "Node " << sourceNode << ": "; //+1 for 1 based indexing 
+            for (const auto& neighbor : neighbors) {
+                int destNode = neighbor.first;
+                float edgeWeight = neighbor.second;
+                
+                cout << "(" << destNode << ", " << edgeWeight << ") ";
+            }
+            cout << endl;
+        }
+    }
+
 
     pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
     {
@@ -94,6 +116,7 @@ public: // public members accessible outside of MyGraph class
             for (auto &v : adjList[u]) //v pulls from adjList at a particular node N 
             {
                 capacity[u][v.first] = v.second; //set capacity first position to the vector pair value of adjList 
+                //cout << "Capacity: " << capacity[u][v.first] << endl; 
             }
         }
 
@@ -123,8 +146,15 @@ public: // public members accessible outside of MyGraph class
         while (currentNode != s) //loops through currentNode while currentNode does not equal the source node 
         {//TODO - these lines cause seg fault?
             path.push_back(currentNode); //pushes currentNode to the path vector 
-            cout << "PATH: " << currentNode; //TODO - this line was causing the seg fault when it was path.at(currentNode) instead of currentNode
-            maxCapacity = min(maxCapacity, capacity[parent[currentNode]][currentNode]); //maxCapacity gets filled by putting values in the min function 
+            cout << "PATH: " << currentNode << endl; //TODO - this line was causing the seg fault when it was path.at(currentNode) instead of currentNode
+            parent[currentNode] = s; 
+            cout << "parent[currentNode]: " << parent[currentNode] << endl; 
+            cout << "Capacity: " << capacity[parent[currentNode]][currentNode] << endl; 
+            if(parent[currentNode] != -1 && capacity[parent[currentNode]][currentNode] > 0){
+                 maxCapacity = min(maxCapacity, capacity[parent[currentNode]][currentNode]); //maxCapacity gets filled by putting values in the min function 
+                 cout << "MAXCAP: " << maxCapacity << endl; 
+            }
+            cout << "parent[currentNode]: " << parent[currentNode] << endl; 
             currentNode = parent[currentNode]; //currentNode gets set to a parent integer based on the currentNode position 
         }
 
@@ -140,7 +170,8 @@ public: // public members accessible outside of MyGraph class
         return make_pair(path, maxCapacity);
     }
 
-private: // private members only accessible to MyGraph class
+private: 
+    // private members only accessible to MyGraph class
     // define the adjList private data member as an unordered map.
     // This data member maps each vertex to a vector of pairs, where each pair consists of a neighboring vertex & the weight of the edge that connects them
     unordered_map<int, vector<pair<int, float> > > adjList;
