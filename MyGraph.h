@@ -45,7 +45,7 @@ public: // public members accessible outside of MyGraph class
         // Add the edge
         adjList[a].push_back(make_pair(b, w));
         adjList[b].push_back(make_pair(a, w));
-        printAdjList(adjList); //TODO - for testing purposes only. 
+        //printAdjList(adjList); //TODO - for testing purposes only. 
         return true;
 
 
@@ -115,7 +115,7 @@ pair<vector<int>, float> HW2Prog(int s, int t, bool printMST)
             for (auto &v : adjList[u]) //v pulls from adjList at a particular node N 
             {
                 capacity[u][v.first] = v.second; //set capacity first position to the vector pair value of adjList 
-                cout << "Capacity: " << capacity[u][v.first] << endl; 
+                //cout << "Capacity: " << capacity[u][v.first] << endl; 
             }
         }
 

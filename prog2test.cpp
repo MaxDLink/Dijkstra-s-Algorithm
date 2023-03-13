@@ -28,8 +28,8 @@ int main()
   {
     int startV, endV;
     ifile >> startV >> endV; // start vertex and end vertex assigned to s and t respectively
-    cout << "START: " << startV << endl; 
-    cout << "ENDV: " << endV << endl; 
+    // cout << "START: " << startV << endl; 
+    // cout << "ENDV: " << endV << endl; 
     p.push_back(startV);  // p vector gets start vertex
     q.push_back(endV);  // q vector gets end vertex
   }
@@ -68,7 +68,7 @@ int main()
 
   cout << "DURATION OF FOR: " << forDuration << "seconds" << endl;
   return (0);
-  
+
 }
 
 //TODO - GOAL: given all input info: want to go from Digim to KRider, whats the maximum amount of passengers you can take without stopping? Previous edge limits capacity if you go back regardless of if you go through other edges with bigger capacity. 
