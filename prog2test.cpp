@@ -3,6 +3,8 @@
 #include <vector>
 #include "MyGraph.h"
 
+#include <chrono> //included for timing for loop 
+
 using namespace std;
 
 int main()
@@ -37,6 +39,10 @@ int main()
   vector<pair<vector<int>, float> > resarray; // resarray stores results after calling HW2Prog method below
 
   // the timer will time this for loop
+  auto start = chrono::high_resolution_clock::now();
+
+  // unsync the I/O of C and C++.
+  ios_base::sync_with_stdio(false);
 
   for (int i = 0; i < p.size(); i++) // loop through p vector
   {
@@ -48,6 +54,10 @@ int main()
     resarray.push_back(res); // pushes res into resarray
   }
 
+  auto end = chrono::high_resolution_clock::now(); //end time after for loop 
+  double forDuration = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+  forDuration *= 1e-9; //multiply to convert to seconds? 
+
   for (int i = 0; i < p.size(); i++) // loop through p vector pair
   {
     cout << p[i] << " -> " << q[i] << " : Path : ";        // print the start vertex, end vertex
@@ -56,7 +66,9 @@ int main()
     cout << "  capacity : " << resarray[i].second << endl; // print the capacity
   }
 
+  cout << "DURATION OF FOR: " << forDuration << "seconds" << endl;
   return (0);
+  
 }
 
 //TODO - GOAL: given all input info: want to go from Digim to KRider, whats the maximum amount of passengers you can take without stopping? Previous edge limits capacity if you go back regardless of if you go through other edges with bigger capacity. 
