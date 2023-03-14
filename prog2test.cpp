@@ -2,7 +2,7 @@
 #include <fstream>
 #include <vector>
 #include "MyGraph.h"
-//#include "MyGraph.cpp" //TODO - commented out for Mac but has to be enabled for windows? 
+#include "MyGraph.cpp" //TODO - commented out for Mac but has to be enabled for windows? 
 #include <chrono> //included for timing for loop 
 
 using namespace std;
