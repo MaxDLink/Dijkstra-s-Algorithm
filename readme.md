@@ -1,6 +1,6 @@
 #Readme file 
 
-#Original Input Modified to work:  
+#Original Input Modified to work:   
 4 5 3
 0 1 8
 0 2 7
@@ -11,7 +11,7 @@
 1 3 
 2 1 
 
-#Test input 
+#Rubric First Example Test input from HKitty Tamagou --> should output path: 0 --> 4 with capacity 110 
 5 6 1
 0 1 145
 0 2 150 
