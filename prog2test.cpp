@@ -46,10 +46,6 @@ int main()
 
   for (int i = 0; i < p.size(); i++) // loop through p vector
   {
-    // vector<int> path;
-    // float maxCapacity = numeric_limits<float>::max();
-    // pair<vector<int>, float> res = make_pair(path, maxCapacity);
-    //TODO - gets through i = 0 but seg faults at i = 1? debugger issue because entering second time? try on windows? 
     pair<vector<int>, float> res = g.HW2Prog(p[i], q[i], true); //calls HW2Prog method and stores results in res
     resarray.push_back(res); // pushes res into resarray
   }
@@ -71,9 +67,6 @@ int main()
 
 }
 
-//TODO - GOAL: given all input info: want to go from Digim to KRider, whats the maximum amount of passengers you can take without stopping? Previous edge limits capacity if you go back regardless of if you go through other edges with bigger capacity. 
-//TODO - EDGE WEIGHT IS FLOATING POINT # NOT INTEGERS 
-//TODO - adjList, adjMatrix, edgeList, or your own structure 
 //TODO - class can post their own test set. Must have at least 5 towns, at least n + 3 rail segment (edges) where n is the # of vertices, mjst query at least 2 pair of cities. For at least 1 pair, route with the maximum capacity must be made up of at least 2 segments. 
 //TODO - can also verify others test sets and get points 
 
