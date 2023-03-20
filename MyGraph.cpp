@@ -172,13 +172,9 @@ bool MyGraph::AddEdge(int a, int b, float w)
         int currentNode = t; //sets currentNode = to t 
         while (currentNode != s) //loops through currentNode while currentNode does not equal the source node 
         {
+            //TODO - path needs to store multiple rail segments and print the full path 
             path.push_back(currentNode); //pushes currentNode to the path vector 
-            // cout << "PATH: " << currentNode << endl; //TODO - this line was causing the seg fault when it was path.at(currentNode) instead of currentNode
             parent[currentNode] = s; 
-            // cout << "parent[currentNode]: " << parent[currentNode] << endl; 
-            // cout << "Capacity: " << capacity[parent[currentNode]][currentNode] << endl; 
-            // cout << "MAXCAP BEFORE: " << max_flow << endl; 
-            // cout << "parent[currentNode]: " << parent[currentNode] << endl; 
             currentNode = parent[currentNode]; //currentNode gets set to a parent integer based on the currentNode position 
         }
 
