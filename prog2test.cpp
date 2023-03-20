@@ -69,4 +69,5 @@ int main()
 
 //TODO - class can post their own test set. Must have at least 5 towns, at least n + 3 rail segment (edges) where n is the # of vertices, mjst query at least 2 pair of cities. For at least 1 pair, route with the maximum capacity must be made up of at least 2 segments. 
 //TODO - can also verify others test sets and get points 
+//TODO - fix min spannning tree? 
 
