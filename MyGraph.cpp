@@ -174,6 +174,7 @@ bool MyGraph::AddEdge(int a, int b, float w)
         {
             //TODO - path needs to store multiple rail segments and print the full path 
             path.push_back(currentNode); //pushes currentNode to the path vector 
+            cout << "Curr Node: " << currentNode << endl; 
             parent[currentNode] = s; //TODO - has to go through next node not source immediately??? 
             currentNode = parent[currentNode]; //currentNode gets set to a parent integer based on the currentNode position 
         }
