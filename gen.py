@@ -2,11 +2,11 @@ import random
 
 def generate_edges(n, num_edges):
     edges = []
-    for i in range(1, n):
+    for i in range(n-1):
         edges.append((i, i + 1, random.randint(1, 100)))
     remaining_edges = num_edges - (n - 1)
     for _ in range(remaining_edges):
-        a, b = random.sample(range(1, n + 1), 2)
+        a, b = random.sample(range(n), 2)
         weight = random.randint(1, 100)
         edges.append((a, b, weight))
     return edges
@@ -14,7 +14,7 @@ def generate_edges(n, num_edges):
 def generate_queries(num_queries, n):
     queries = []
     for _ in range(num_queries):
-        a, b = random.sample(range(1, n + 1), 2)
+        a, b = random.sample(range(n), 2)
         queries.append((a, b))
     return queries
 
