@@ -32,33 +32,33 @@ Lines with 2 #s = Paths that want to be found between two Nodes.
 0 4 
 
 ### Custom test set - two cities connected with at least one connection including multiple segments 
-## output: path 1 --> 2: . Path 6 --> 2: 
+## Output: 0 -> 1 : Path : 0  4  3  1    capacity : 50 5 -> 1 : Path : 5  1    capacity : 200
 6 9 2 
-1 6 20 
-1 5 50 
-1 2 30 
-3 2 90
-4 2 70 
-4 3 80 
-5 2 40 
-5 4 60 
-6 2 200
-1 2 
-6 2 
+0 5 20 
+0 4 50 
+0 1 30 
+2 1 90
+3 1 70 
+3 2 80 
+4 1 40 
+4 3 60 
+5 1 200
+0 1 
+5 1 
 
 ### Custom test set - two cities connected with at least one connection including multiple segments 
-## Output: 1 -> 4 : Path : 1  4    capacity : 8. 3 -> 1 : Path : 3  1    capacity : 5
+## Output: 0 -> 3 : Path : 0  3    capacity : 8. 2 -> 0 : Path : 2  4  0    capacity : 5
 5 8 2 
-1 4 8 
-1 5 7 
-1 2 1 
-4 3 3 
-4 5 4 
-3 2 2 
-3 5 5 
-2 5 6 
-1 4 
-3 1 
+0 3 8 
+0 4 7 
+0 1 1 
+3 2 3 
+3 4 4 
+2 1 2 
+2 4 5 
+1 4 6 
+0 3 
+2 0 
 
 ## 1000 nodes with 20 queries 
 1000 1500 20
