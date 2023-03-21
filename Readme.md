@@ -12,7 +12,7 @@ Other lines with 3 #s = Node1, Node2, Weight between Nodes.
 Lines with 2 #s = Paths that want to be found between two Nodes. 
 
 ## Orignial Input (unmodified): 
-4 5 3 
+4 5 3
 0 1 8
 0 2 7
 3 2 2
