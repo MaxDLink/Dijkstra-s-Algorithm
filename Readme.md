@@ -9,19 +9,8 @@ In this program, a modified version of the Dijsktra algorithm was used. The orig
 ## Test Cases: 
 First line = # of vertices, # of edges, # of paths that will be looked for.  
 Other lines with 3 #s = Node1, Node2, Weight between Nodes. 
-Lines with 2 #s = Paths that want to be found between two Nodes. 
-
-## Orignial Input (unmodified): 
-4 5 3
-0 1 8
-0 2 7
-3 2 2
-3 1 3
-1 2 5
-1 2
-2 4
-3 2
-### Original Input Modified to work:   
+Lines with 2 #s = Paths that want to be found between two Nodes.
+### Original Input:   
 4 5 3
 0 1 8
 0 2 7
