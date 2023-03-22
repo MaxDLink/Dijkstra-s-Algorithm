@@ -98,7 +98,6 @@ bool MyGraph::AddEdge(int a, int b, float w)
         vector<float> dist(N, numeric_limits<float>::min()); //vector that holds floats & measures dist? 
         priority_queue<pair<float, int>, vector<pair<float, int> > > pq; //priority Queue that holds pairs 
         vector<vector<float> > capacity(N, vector<float>(N, 0)); // capacity stores the capacities of the edges in the graph
-        //vector<vector<float> > capacity(N, vector<float>(N, numeric_limits<float>::max())); // initialize capacity to infinity
 
 
         
@@ -144,20 +143,16 @@ bool MyGraph::AddEdge(int a, int b, float w)
         pq.push(make_pair(dist[s], s)); //push s and its max distance
         while (!pq.empty()) {
             int u = pq.top().second;
-            //cout << "U: " << u << endl; 
             pq.pop();
             if (u == t)
                 break;
             for (auto &v : adjList[u]) {
-               //if (capacity[u][v.first] > 0) {//TODO - added for capacity check 
                 int neighbor = v.first;
                 float weight = v.second;
                 float alt = min(dist[u], capacity[u][neighbor]);
                 if (alt > dist[neighbor]) {
                     dist[neighbor] = alt;
-                    //if(parent[neighbor] == -1){ //TODO - if parent[neighbor] == -1
-                        parent[neighbor] = u; //have not visited this node yet, so visit here. This stops dist from being greater than alt, so all path results will be recorded. 
-                   //}
+                    parent[neighbor] = u; //have not visited this node yet, so visit here. This stops dist from being greater than alt, so all path results will be recorded. 
                     pq.push(make_pair(dist[neighbor], neighbor));
                 }
                //}
