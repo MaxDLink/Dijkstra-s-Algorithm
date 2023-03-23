@@ -141,12 +141,11 @@ bool MyGraph::AddEdge(int a, int b, float w)
         //dijskstra algo modified for finding the highest capacity path 
         dist[s] = numeric_limits<float>::max(); // start with s
         pq.push(make_pair(dist[s], s)); //push s and its max distance
-        while (!pq.empty()) {
-            int u = pq.top().second;
-            pq.pop();
-            if (u == t)
-                break;
-            for (auto &v : adjList[u]) {
+        while (!pq.empty()) { //loop through all of pq while it is full 
+            int u = pq.top().second; //set u to the top value in the pq. Should set to the second vector -- vector pair <float, int> 
+            pq.pop(); //pop that value off the priority queue 
+           
+            for (auto &v : adjList[u]) { //set v to adjList value 
                 int neighbor = v.first;
                 float weight = v.second;
                 float alt = min(dist[u], capacity[u][neighbor]);
@@ -155,7 +154,6 @@ bool MyGraph::AddEdge(int a, int b, float w)
                     parent[neighbor] = u; //have not visited this node yet, so visit here. This stops dist from being greater than alt, so all path results will be recorded. 
                     pq.push(make_pair(dist[neighbor], neighbor));
                 }
-               //}
             }
         }
 
