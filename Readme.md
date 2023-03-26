@@ -1,5 +1,3 @@
-#Readme File 
-
 # The GOAL: Create a graph. Retreive the highest capacity between two Nodes in the graph. 
 ## Note: When getting multiple capacities (crossing multiple edges), the smallest capacity will be retrieved.   
 
