@@ -3,8 +3,13 @@
 # The GOAL: Create a graph. Retreive the highest capacity between two Nodes in the graph. 
 ## Note: When getting multiple capacities (crossing multiple edges), the smallest capacity will be retrieved.   
 
+## Program Overview: 
+# How graph is being represented: 
+The graph is being represented as an undirected graph. The graph information is stored inside an unordered map called adjList. The adjList holds the different Nodes and their associated weight since the adjList unordered map is a <int, vector<pair<int, float>> pair. The int value represents the current node you are currently on, node 1. The vector<pair<int, float>> stores the neighboring node, node 2, in the int slot and the weight (in this scenario, the weight between node 1 & 2, known as the capacity) in the float slot. The adjList is pulled from to set properties like the capacity in the hw2prog method. The graph is being traversed through with a priority queue that holds the nodes you want to examine. The method then loops through the priority queue nodes and applies the algorithm. 
+
 # Algorithm 
-In this program, a modified version of the Dijsktra algorithm was used. The original algorithm grabs the shortest path in a graph. The algorithm views the weight on the graph as a distance and grabs the lowest distance value between two points. This algorithm can be easily modified to grab the highest weight between two nodes instead of the lowest. Instead of viewing the weight as distance, it can be viewed as capacity. 
+In this program, a modified version of the Dijsktra algorithm was used (here, breadth-first-search, with a priority queue). The original algorithm grabs the shortest path in a graph. The algorithm views the weight on the graph as a distance and grabs the lowest distance value between two points. This algorithm can be easily modified to grab the highest weight between two nodes instead of the lowest. This modification was made by replacing dist[s] = 0 with dist[s] = numeric_limits<float>::max() & changing the pq.push(make_pair(0, s)) -- > pq.push(make_pair(dist[s], s)). The most significant change was in the for loop that loops through adjList to examine each vertice value. In the unmodified version, this for loop sets the alt value to the weight of the next vertice and compares it to the current weight, & if alt < curr weight then you swap and curr weight inherits alts weight value. This is then pushed onto the priority queue as the new capacity for the associated vertice. However, this finds the smallest capacity instead of the highest capacity, so this had to be changed to where alt > curr weight(dist[neighbor]), written as alt > dist[neighbor]. Instead of viewing the weight as distance, it can be viewed as capacity in this scenario, where the highest weight is the highest graph capacity. 
+
 
 ## Test Cases: 
 First line = # of vertices, # of edges, # of paths that will be looked for.  
