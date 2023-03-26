@@ -15,7 +15,7 @@ using namespace std;
 class MyGraph
 {       // declaration of class MyGraph
 public: // public members accessible outside of MyGraph class
-   MyGraph(int n); 
+    MyGraph(int n); 
 
     MyGraph(const MyGraph &g); 
 
