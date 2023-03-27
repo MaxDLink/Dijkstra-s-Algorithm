@@ -148,7 +148,7 @@ bool MyGraph::AddEdge(int a, int b, float w)
                 int neighbor = v.first;
                 float weight = v.second;
                 float alt = min(dist[u], capacity[u][neighbor]);
-                if (alt > dist[neighbor]) {
+                if (neighbor < N && alt > dist[neighbor]) { //TODO - this line causes the segfault because the comparison is wrong. dist is greater than alt? Already have the node included inside? 
                     dist[neighbor] = alt;
                     parent[neighbor] = u;
                     pq.push(make_pair(dist[neighbor], neighbor));
@@ -193,6 +193,65 @@ bool MyGraph::AddEdge(int a, int b, float w)
         // return the path and maximum capacity
         return make_pair(path, max_flow);
     } 
+
+// pair<vector<int>, float> MyGraph::HW2Prog(int s, int t, bool printMST)
+// {
+//     const int N = adjList.size();
+//     vector<int> parent(N, -1);
+//     vector<float> dist(N, numeric_limits<float>::min());
+//     priority_queue<pair<float, int>, vector<pair<float, int> > > pq;
+//     vector<vector<float> > capacity(N, vector<float>(N, 0));
+    
+//     for (int u = 0; u < N; u++) {
+//         for (auto &v : adjList[u]) {
+//             capacity[u][v.first] = v.second;
+//         }
+//     }
+
+//     dist[s] = numeric_limits<float>::max();
+//     pq.push(make_pair(dist[s], s));
+//     while (!pq.empty()) {
+//         int u = pq.top().second;
+//         pq.pop();
+//         if (u == t)
+//             break;
+//         for (auto &v : adjList[u]) {
+//             int neighbor = v.first;
+//             float weight = v.second;
+//             float alt = min(dist[u], capacity[u][neighbor]);
+//             if (neighbor < N && alt > dist[neighbor]) {
+//                 dist[neighbor] = alt;
+//                 parent[neighbor] = u;
+//                 pq.push(make_pair(dist[neighbor], neighbor));
+//             }
+//         }
+//     }
+
+//     if (printMST) {
+//         cout << "MST:" << endl;
+//         for (int i = 0; i < N; i++) {
+//             if (parent[i] != -1) {
+//                 cout << parent[i] << " - " << i << endl;
+//             }
+//         }
+//     }
+
+//     vector<int> path;
+//     float max_flow = dist[t];
+//     int currentNode = t;
+//     while (currentNode != s) {
+//         path.push_back(currentNode);
+//         parent[currentNode] = s;
+//         currentNode = parent[currentNode];
+//     }
+
+//     path.push_back(s);
+//     if (!path.empty()) {
+//         reverse(path.begin(), path.end());
+//     }
+
+//     return make_pair(path, max_flow);
+// }
 
     void MyGraph::addVertex(int v)
     { // i (the current vertice) is passed into add vertex as V
