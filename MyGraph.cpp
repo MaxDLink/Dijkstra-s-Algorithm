@@ -98,8 +98,6 @@ bool MyGraph::AddEdge(int a, int b, float w)
         vector<float> dist(N, numeric_limits<float>::min()); //vector that holds floats & measures dist? 
         priority_queue<pair<float, int>, vector<pair<float, int> > > pq; //priority Queue that holds pairs 
         vector<vector<float> > capacity(N, vector<float>(N, 0)); // capacity stores the capacities of the edges in the graph
-
-
         
         
         // initialize capacity of each edge
@@ -143,13 +141,14 @@ bool MyGraph::AddEdge(int a, int b, float w)
         pq.push(make_pair(dist[s], s)); //push s and its max distance
         while (!pq.empty()) { //loop through all of pq while it is full 
             int u = pq.top().second; //set u to the top value in the pq. Should set to the second vector -- vector pair <float, int> 
-            pq.pop(); //pop that value off the priority queue 
-           
+            pq.pop();  //pop that value off the priority queue 
+            if (u == t)
+                break;
             for (auto &v : adjList[u]) { //set v to adjList value 
                 int neighbor = v.first;
                 float weight = v.second;
                 float alt = min(dist[u], capacity[u][neighbor]);
-                if (alt > dist[neighbor]) {
+                if (neighbor < N && alt > dist[neighbor]) { //TODO - this line causes the segfault because the comparison is wrong. dist is greater than alt? Already have the node included inside? 
                     dist[neighbor] = alt;
                     parent[neighbor] = u; //have not visited this node yet, so visit here. This stops dist from being greater than alt, so all path results will be recorded. 
                     pq.push(make_pair(dist[neighbor], neighbor));
@@ -173,9 +172,13 @@ bool MyGraph::AddEdge(int a, int b, float w)
         int currentNode = t; //sets currentNode = to t 
         while (currentNode != s) //loops through currentNode while currentNode does not equal the source node 
         {
-            //TODO - path needs to store multiple rail segments and print the full path 
             path.push_back(currentNode); //pushes currentNode to the path vector 
-            //cout << "Curr Node: " << currentNode << endl; 
+            // cout << "PATH: " << currentNode << endl; //TODO - this line was causing the seg fault when it was path.at(currentNode) instead of currentNode
+            //parent[currentNode] = s; 
+            // cout << "parent[currentNode]: " << parent[currentNode] << endl; 
+            // cout << "Capacity: " << capacity[parent[currentNode]][currentNode] << endl; 
+            // cout << "MAXCAP BEFORE: " << max_flow << endl; 
+            // cout << "parent[currentNode]: " << parent[currentNode] << endl; 
             currentNode = parent[currentNode]; //currentNode gets set to a parent integer based on the currentNode position 
         }
 
