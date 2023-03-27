@@ -174,7 +174,7 @@ bool MyGraph::AddEdge(int a, int b, float w)
         {
             path.push_back(currentNode); //pushes currentNode to the path vector 
             // cout << "PATH: " << currentNode << endl; //TODO - this line was causing the seg fault when it was path.at(currentNode) instead of currentNode
-            parent[currentNode] = s; 
+            //parent[currentNode] = s; 
             // cout << "parent[currentNode]: " << parent[currentNode] << endl; 
             // cout << "Capacity: " << capacity[parent[currentNode]][currentNode] << endl; 
             // cout << "MAXCAP BEFORE: " << max_flow << endl; 
