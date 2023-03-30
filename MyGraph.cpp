@@ -1,5 +1,5 @@
 #include "MyGraph.h" 
-
+#include <fstream>
 MyGraph::MyGraph(int n)
     {                               // Create a graph with n vertices. The vertices are labelled 1..n. Can use adjacency list or adjacency matrix.
         for (int i = 1; i < n; i++) // loop through all your n values
@@ -195,6 +195,9 @@ bool MyGraph::AddEdge(int a, int b, float w)
         if (!path.empty()) {//checks if path is empty before it reverses the path 
             reverse(path.begin(), path.end());
         }
+
+        ofstream myfile ("output.txt"); //creates output.txt file
+        output(myfile); //prints the graph to the output.txt file
 
         // return the path and maximum capacity
         return make_pair(path, max_flow);
