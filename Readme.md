@@ -1585,3 +1585,17 @@ Lines with 2 #s = Paths that want to be found between two Nodes.
 420 600
 887 888
 670 368
+
+## Custom Test Set 
+## Output: 
+5 8 2
+2 4 6
+4 5 7
+5 1 8
+1 2 7
+2 3 3
+4 3 3
+5 3 3
+1 3 4
+1 4 
+2 5
