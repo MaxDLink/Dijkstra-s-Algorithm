@@ -58,18 +58,24 @@ bool MyGraph::AddEdge(int a, int b, float w)
         return check; //return check 
     }   
 
-    void MyGraph::output(ostream &os)
-    { // Output the graph to the ostream& specified
-        for (const auto &[vertex, neighbors] : adjList)
-        {                         // go through adjList and grab vertex and neighbors
-            os << vertex << ": "; // print vertex
-            for (const auto &neighbor : neighbors)
-            { // for each vertex, go through neighbors & print neighbor.first & neighbor.second
-                os << neighbor.first << "(" << neighbor.second << ") ";
+    void MyGraph::output(ostream &os) {
+    os << adjList.size() << endl;  // print the number of vertices
+
+    for (auto& node : adjList) {
+        int src = node.first;
+        for (auto& neighbor : node.second) {
+            int dest = neighbor.first;
+            float weight = neighbor.second;
+            if (src < dest) {
+                os << src << " " << dest << " " << weight << endl;
             }
-            os << endl; // endl for formatting
         }
     }
+}
+
+
+
+
 
     //TODO - for testing purposes. Check if adjList is filled correctly. 
     void MyGraph::printAdjList(const unordered_map<int, vector<pair<int, float> > >& adjList) {
