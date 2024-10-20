@@ -1,69 +1,101 @@
-# The GOAL: Create a graph. Retreive the highest capacity between two Nodes in the graph. 
-## Note: When getting multiple capacities (crossing multiple edges), the smallest capacity will be retrieved.   
+# The GOAL: Create a graph. Retreive the highest capacity between two Nodes in the graph.
 
-## Program Overview: 
-# How graph is being represented: 
-The graph is being represented as an undirected graph. The graph information is stored inside an unordered map called adjList. The adjList holds the different Nodes and their associated weight since the adjList unordered map is a <int, vector<pair<int, float>> pair. The int value represents the current node you are currently on, node 1. The vector<pair<int, float>> stores the neighboring node, node 2, in the int slot and the weight (in this scenario, the weight between node 1 & 2, known as the capacity) in the float slot. The adjList is pulled from to set properties like the capacity in the hw2prog method. The graph is being traversed through with a priority queue that holds the nodes you want to examine. The method then loops through the priority queue nodes and applies the algorithm. 
+## Note: When getting multiple capacities (crossing multiple edges), the smallest capacity will be retrieved.
 
-# Algorithm 
-In this program, a modified version of the Dijsktra algorithm was used (here, breadth-first-search, with a priority queue). The original algorithm grabs the shortest path in a graph. The algorithm views the weight on the graph as a distance and grabs the lowest distance value between two points. This algorithm can be easily modified to grab the highest weight between two nodes instead of the lowest. This modification was made by replacing dist[s] = 0 with dist[s] = numeric_limits<float>::max() & changing the pq.push(make_pair(0, s)) -- > pq.push(make_pair(dist[s], s)). The most significant change was in the for loop that loops through adjList to examine each vertice value. In the unmodified version, this for loop sets the alt value to the weight of the next vertice and compares it to the current weight, & if alt < curr weight then you swap and curr weight inherits alts weight value. This is then pushed onto the priority queue as the new capacity for the associated vertice. However, this finds the smallest capacity instead of the highest capacity, so this had to be changed to where alt > curr weight(dist[neighbor]), written as alt > dist[neighbor]. Instead of viewing the weight as distance, it can be viewed as capacity in this scenario, where the highest weight is the highest graph capacity. 
+## How to run the program
 
+(base) maxlink@wrls10-8-228-153 Dijkstra-s-Algorithm % g++ -std=c++11 -o prog prog2test.cpp MyGraph.cpp
 
-## Test Cases: 
+(base) maxlink@wrls10-8-228-153 Dijkstra-s-Algorithm % ./prog
+MST:
+0 - 1
+1 - 2
+2 - 3
+2 - 4
+MST:
+1 - 0
+1 - 2
+2 - 3
+2 - 4
+0 -> 4 : Path : 0 1 2 4 capacity : 5
+1 -> 3 : Path : 1 2 3 capacity : 5
+DURATION OF FOR: 0.000282583seconds
+(base) maxlink@wrls10-8-228-153 Dijkstra-s-Algorithm %
+
+## Program Overview:
+
+# How graph is being represented:
+
+The graph is being represented as an undirected graph. The graph information is stored inside an unordered map called adjList. The adjList holds the different Nodes and their associated weight since the adjList unordered map is a <int, vector<pair<int, float>> pair. The int value represents the current node you are currently on, node 1. The vector<pair<int, float>> stores the neighboring node, node 2, in the int slot and the weight (in this scenario, the weight between node 1 & 2, known as the capacity) in the float slot. The adjList is pulled from to set properties like the capacity in the hw2prog method. The graph is being traversed through with a priority queue that holds the nodes you want to examine. The method then loops through the priority queue nodes and applies the algorithm.
+
+# Algorithm
+
+In this program, a modified version of the Dijsktra algorithm was used (here, breadth-first-search, with a priority queue). The original algorithm grabs the shortest path in a graph. The algorithm views the weight on the graph as a distance and grabs the lowest distance value between two points. This algorithm can be easily modified to grab the highest weight between two nodes instead of the lowest. This modification was made by replacing dist[s] = 0 with dist[s] = numeric_limits<float>::max() & changing the pq.push(make_pair(0, s)) -- > pq.push(make_pair(dist[s], s)). The most significant change was in the for loop that loops through adjList to examine each vertice value. In the unmodified version, this for loop sets the alt value to the weight of the next vertice and compares it to the current weight, & if alt < curr weight then you swap and curr weight inherits alts weight value. This is then pushed onto the priority queue as the new capacity for the associated vertice. However, this finds the smallest capacity instead of the highest capacity, so this had to be changed to where alt > curr weight(dist[neighbor]), written as alt > dist[neighbor]. Instead of viewing the weight as distance, it can be viewed as capacity in this scenario, where the highest weight is the highest graph capacity.
+
+## Test Cases:
+
 First line = # of vertices, # of edges, # of paths that will be looked for.  
-Other lines with 3 #s = Node1, Node2, Weight between Nodes. 
+Other lines with 3 #s = Node1, Node2, Weight between Nodes.
 Lines with 2 #s = Paths that want to be found between two Nodes.
-### Original Input:   
+
+### Original Input:
+
 4 5 3
 0 1 8
 0 2 7
 3 2 2
 3 1 3
 1 2 5
-0 1 
-1 3 
-2 1 
+0 1
+1 3
+2 1
 
-### Rubric First Example Test input from HKitty Tamagou --> should output path: 0 --> 4 with capacity 110 
+### Rubric First Example Test input from HKitty Tamagou --> should output path: 0 --> 4 with capacity 110
+
 5 6 1
 0 1 145
-0 2 150 
-1 3 65 
-2 3 125 
-3 4 110 
-2 4 65 
-0 4 
+0 2 150
+1 3 65
+2 3 125
+3 4 110
+2 4 65
+0 4
 
-### Custom test set - two cities connected with at least one connection including multiple segments 
-## Output: 0 -> 1 : Path : 0  4  3  1    capacity : 50 5 -> 1 : Path : 5  1    capacity : 200
-6 9 2 
-0 5 20 
-0 4 50 
-0 1 30 
+### Custom test set - two cities connected with at least one connection including multiple segments
+
+## Output: 0 -> 1 : Path : 0 4 3 1 capacity : 50 5 -> 1 : Path : 5 1 capacity : 200
+
+6 9 2
+0 5 20
+0 4 50
+0 1 30
 2 1 90
-3 1 70 
-3 2 80 
-4 1 40 
-4 3 60 
+3 1 70
+3 2 80
+4 1 40
+4 3 60
 5 1 200
-0 1 
-5 1 
+0 1
+5 1
 
-### Custom test set - two cities connected with at least one connection including multiple segments 
-## Output: 0 -> 3 : Path : 0  3    capacity : 8. 2 -> 0 : Path : 2  4  0    capacity : 5
-5 8 2 
-0 3 8 
-0 4 7 
-0 1 1 
-3 2 3 
-3 4 4 
-2 1 2 
-2 4 5 
-1 4 6 
-0 3 
-2 0 
+### Custom test set - two cities connected with at least one connection including multiple segments
 
-## 1000 nodes with 20 queries 
+## Output: 0 -> 3 : Path : 0 3 capacity : 8. 2 -> 0 : Path : 2 4 0 capacity : 5
+
+5 8 2
+0 3 8
+0 4 7
+0 1 1
+3 2 3
+3 4 4
+2 1 2
+2 4 5
+1 4 6
+0 3
+2 0
+
+## 1000 nodes with 20 queries
+
 1000 1500 20
 0 1 9
 1 2 25
@@ -1586,8 +1618,10 @@ Lines with 2 #s = Paths that want to be found between two Nodes.
 887 888
 670 368
 
-## Custom Test Set 
-## Output: 
+## Custom Test Set
+
+## Output:
+
 5 8 2
 2 4 6
 4 5 7
@@ -1597,5 +1631,5 @@ Lines with 2 #s = Paths that want to be found between two Nodes.
 4 3 3
 5 3 3
 1 3 4
-1 4 
+1 4
 2 5
